@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healui.ai - Transforming Physiotherapy with AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0891b2;
+            --primary-dark: #0e7490;
+            --secondary-color: #06b6d4;
+            --accent-color: #0ea5e9;
+            --physio-accent: #10b981;
+            --bg-light: #fafbfc;
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            --text-light: #718096;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --gradient-1: linear-gradient(135deg, #0891b2 0%, #10b981 100%);
+            --gradient-2: linear-gradient(135deg, #0891b2 0%, #0ea5e9 100%);
+            --gradient-physio: linear-gradient(135deg, #10b981 0%, #0891b2 100%);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Tech Grid Background */
+        .tech-grid {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(8, 145, 178, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(8, 145, 178, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header with Glassmorphism */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: var(--gradient-physio);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-physio);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-physio);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient-physio);
+            color: var(--white);
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            padding: 10rem 5% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-physio);
+            top: 10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-2);
+            top: 60%;
+            right: -5%;
+            animation-delay: 5s;
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            bottom: 10%;
+            left: 10%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-physio);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero .subtext {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            letter-spacing: -0.01em;
+        }
+
+        .hero .highlight {
+            font-size: 1.25rem;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--physio-accent);
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .secondary-button {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--physio-accent);
+            border: 2px solid transparent;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .secondary-button:hover {
+            background: var(--physio-accent);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Device Integration Section */
+        .device-integration {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--bg-light) 0%, rgba(16, 185, 129, 0.03) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-showcase {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .device-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .device-content h2 span {
+            background: var(--gradient-physio);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .device-content p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .device-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .device-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .device-feature:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--physio-accent);
+        }
+
+        .device-feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-physio);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .device-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 10px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-interface {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--physio-accent) 0%, var(--primary-color) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .device-icons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .device-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: devicePulse 3s infinite;
+        }
+
+        @keyframes devicePulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* About Us Section */
+        .about-section {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .about-text p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-physio);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+
+        /* Corporate Section */
+        .corporate-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--bg-light) 0%, rgba(16, 185, 129, 0.03) 100%);
+        }
+
+        .corporate-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .corporate-hero h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .corporate-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--physio-accent);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-physio);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .benefit-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .corporate-cta {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-physio);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+            border-color: var(--physio-accent);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-physio);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .step h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.375rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .step p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-light) 0%, rgba(16, 185, 129, 0.02) 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature {
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 20px;
+            background: var(--white);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature:hover::before {
+            opacity: 1;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-physio);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .feature p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Testimonials with Modern Cards */
+        .testimonials {
+            padding: 6rem 5%;
+            background: var(--white);
+            position: relative;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 4rem;
+            color: var(--physio-accent);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.1);
+        }
+
+        .testimonial-text {
+            font-size: 1.0625rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 55px;
+            height: 55px;
+            background: var(--gradient-physio);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .author-info p {
+            font-size: 0.9375rem;
+            color: var(--text-gray);
+        }
+
+        /* CTA Section with Gradient Animation */
+        .cta-section {
+            padding: 6rem 5%;
+            text-align: center;
+            background: linear-gradient(-45deg, #10b981, #0891b2, #0ea5e9, #10b981);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.375rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta-button {
+            background: var(--white);
+            color: var(--physio-accent);
+            font-size: 1.125rem;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta-button:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0e27;
+            color: var(--white);
+            padding: 4rem 5% 2rem;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.375rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            padding-left: 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9375rem;
+        }
+
+        /* Loading Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: var(--gradient-physio);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: var(--shadow-lg);
+                border-radius: 0 0 20px 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtext {
+                font-size: 1.25rem;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .hero-ctas a {
+                width: 80%;
+                text-align: center;
+            }
+
+            .device-showcase {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .steps, .features-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--physio-accent);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-grid"></div>
+    
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🏃</div>
+                Healui.ai
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#features">Features</a>
+                <a href="#device-integration">Smart Devices</a>
+                <a href="#about">About Us</a>
+                <a href="#corporate">For Corporates</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#" class="cta-button">Try Healui.ai</a>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">☰</div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+        </div>
+        <h1>Transforming <span>Physiotherapy</span><br>with Clinical AI Intelligence</h1>
+        <p class="subtext">Empowering physiotherapists with AI that understands movement, rehabilitation, and recovery.</p>
+        <p class="highlight">🏃 Bridging the gap in Indian physiotherapy care</p>
+        <div class="hero-ctas">
+            <a href="#" class="cta-button">Start Free Trial</a>
+            <a href="#" class="secondary-button">Book a Demo</a>
+        </div>
+    </section>
+
+    <!-- Device Integration Section -->
+    <section class="device-integration" id="device-integration">
+        <div class="device-showcase">
+            <div class="device-content reveal">
+                <h2>The Future is <span>Connected Care</span></h2>
+                <p>Seamlessly integrate medical devices with your smartphone. Monitor rehabilitation progress, track movement patterns, and adjust treatment protocols in real-time.</p>
+                
+                <div class="device-features">
+                    <div class="device-feature">
+                        <div class="device-feature-icon">📱</div>
+                        <div>
+                            <h4>Smart Device Pairing</h4>
+                            <p>Connect TENS units, muscle stimulators, and motion sensors directly to your phone</p>
+                        </div>
+                    </div>
+                    <div class="device-feature">
+                        <div class="device-feature-icon">📊</div>
+                        <div>
+                            <h4>Real-time Analytics</h4>
+                            <p>Track patient progress with live data from connected physiotherapy equipment</p>
+                        </div>
+                    </div>
+                    <div class="device-feature">
+                        <div class="device-feature-icon">🔄</div>
+                        <div>
+                            <h4>Automated Adjustments</h4>
+                            <p>AI optimizes device settings based on patient response and recovery patterns</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="device-visual reveal">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="app-interface">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Healui Control Center</h3>
+                            <div class="device-icons">
+                                <div class="device-icon">💪</div>
+                                <div class="device-icon">⚡</div>
+                                <div class="device-icon">📈</div>
+                                <div class="device-icon">🎯</div>
+                                <div class="device-icon">🔋</div>
+                                <div class="device-icon">🏥</div>
+                            </div>
+                            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.9;">Connected Devices: 3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-header reveal">
+                <h2>Transforming Indian Healthcare</h2>
+                <p class="section-subtitle">Making world-class physiotherapy accessible to every Indian</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text reveal">
+                    <h3>Bridging the Physiotherapy Gap</h3>
+                    <p>India faces a critical shortage of physiotherapists, with only 1 physiotherapist per 100,000 people compared to the WHO recommended ratio of 1:10,000. This leaves millions without access to proper rehabilitation care.</p>
+                    <p>Healui.ai is here to transform this landscape. By empowering existing physiotherapists with AI-powered tools, we're multiplying their impact, enabling them to serve more patients effectively while maintaining the highest standards of care.</p>
+                    <p>Our mission is simple: Make quality physiotherapy accessible to every Indian, regardless of their location or economic status.</p>
+                </div>
+                
+                <div class="stats-grid reveal">
+                    <div class="stat-card">
+                        <div class="stat-number">75%</div>
+                        <div class="stat-label">Indians lack access to physiotherapy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10x</div>
+                        <div class="stat-label">Efficiency gain with Healui.ai</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1M+</div>
+                        <div class="stat-label">Patients to be served by 2025</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Clinics already transformed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corporate Section -->
+    <section class="corporate-section" id="corporate">
+        <div class="corporate-hero reveal">
+            <h2>Corporate Wellness Programs</h2>
+            <p class="section-subtitle">Empower your workforce with AI-driven physiotherapy benefits. Reduce workplace injuries, improve productivity, and show your employees you care.</p>
+        </div>
+        
+        <div class="corporate-benefits">
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">🏢</div>
+                <h3>On-site Assessments</h3>
+                <p>Regular workplace ergonomic evaluations and personalized exercise programs for your employees</p>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">📱</div>
+                <h3>24/7 Virtual Care</h3>
+                <p>Round-the-clock access to physiotherapy consultations through our AI-powered platform</p>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">📊</div>
+                <h3>Health Analytics</h3>
+                <p>Comprehensive reports on workplace health trends and injury prevention insights</p>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">💰</div>
+                <h3>Cost Savings</h3>
+                <p>Reduce healthcare costs by 40% with preventive care and early intervention</p>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">🎯</div>
+                <h3>Custom Programs</h3>
+                <p>Tailored wellness initiatives based on your industry and employee demographics</p>
+            </div>
+            <div class="benefit-card reveal">
+                <div class="benefit-icon">🏆</div>
+                <h3>Productivity Boost</h3>
+                <p>30% reduction in sick days and improved employee satisfaction scores</p>
+            </div>
+        </div>
+        
+        <div class="corporate-cta reveal">
+            <a href="#" class="cta-button">Get Corporate Quote</a>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-container">
+            <h2 class="section-title reveal">How It Works</h2>
+            <p class="section-subtitle reveal">Three simple steps to revolutionize your physiotherapy practice</p>
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <h3>Patient Assessment</h3>
+                    <p>Patients complete detailed movement assessments and symptom questionnaires through our intuitive interface, saving valuable clinic time.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <h3>AI Analysis & Protocol</h3>
+                    <p>Our physiotherapy-specific AI analyzes movement patterns, symptoms, and medical history to suggest evidence-based treatment protocols.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <h3>Guided Treatment</h3>
+                    <p>Physiotherapists receive real-time recommendations during sessions, with automated documentation and progress tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <h2 class="section-title reveal">Physiotherapy-Focused Features</h2>
+            <p class="section-subtitle reveal">Built by physiotherapists, for physiotherapists</p>
+            <div class="features-grid">
+                <div class="feature reveal">
+                    <div class="feature-icon">🏃</div>
+                    <h3>Movement Analysis</h3>
+                    <p>AI-powered gait analysis and posture assessment for precise rehabilitation planning</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">💪</div>
+                    <h3>Exercise Prescription</h3>
+                    <p>Personalized exercise programs with video demonstrations and progress tracking</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">📝</div>
+                    <h3>SOAP Notes</h3>
+                    <p>Automated clinical documentation specifically designed for physiotherapy workflows</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Pain Mapping</h3>
+                    <p>Interactive body charts for precise pain documentation and treatment targeting</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">📅</div>
+                    <h3>Home Programs</h3>
+                    <p>Automated home exercise programs with patient compliance tracking</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Visual progress reports showing ROM improvements and functional gains</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">📊</div>
+                    <h3>Outcome Measures</h3>
+                    <p>Integrated standardized tests like Berg Balance Scale and Timed Up & Go</p>
+                </div>
+                <div class="feature reveal">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Multi-Clinic Support</h3>
+                    <p>Manage multiple locations with centralized patient records and analytics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-container">
+            <h2 class="section-title reveal">Trusted by Leading Physiotherapists</h2>
+            <p class="section-subtitle reveal">See how Healui.ai is transforming practices across India</p>
+            <div class="testimonials-grid">
+                <div class="testimonial reveal">
+                    <p class="testimonial-text">"As a sports physiotherapist, the movement analysis feature has been game-changing. I can now provide Olympic-level care to all my athletes, not just the elite ones."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RS</div>
+                        <div class="author-info">
+                            <h4>Ravi Sharma, MPT</h4>
+                            <p>Sports Physiotherapist, Delhi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial reveal">
+                    <p class="testimonial-text">"The home exercise program feature ensures my patients continue their rehabilitation between sessions. Compliance has improved by 70% since we started using Healui.ai."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PM</div>
+                        <div class="author-info">
+                            <h4>Dr. Priya Menon</h4>
+                            <p>Neuro Physiotherapist, Chennai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial reveal">
+                    <p class="testimonial-text">"Managing 3 clinics was overwhelming until Healui.ai. Now I can monitor all locations, track therapist performance, and ensure quality care everywhere."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div class="author-info">
+                            <h4>Arjun Khanna, BPT</h4>
+                            <p>Clinic Chain Owner, Mumbai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Transform Your Practice?</h2>
+        <p>Join 1000+ physiotherapists revolutionizing rehabilitation care in India.</p>
+        <a href="#" class="cta-button">Start Your Journey</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Healui.ai</h3>
+                <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.7); line-height: 1.7;">
+                    Empowering physiotherapists across India with AI-driven clinical intelligence. Together, we're making quality rehabilitation care accessible to every Indian.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#about">About Us</a>
+                    <a href="#features">Features</a>
+                    <a href="#corporate">Corporate Programs</a>
+                    <a href="#">Partner With Us</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <div class="footer-links">
+                    <a href="#">Clinical Guidelines</a>
+                    <a href="#">Exercise Library</a>
+                    <a href="#">Research Papers</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <div class="footer-links">
+                    <a href="#">📱 WhatsApp: +91-9876543210</a>
+                    <a href="#">📅 Schedule Demo</a>
+                    <a href="#">📧 physio@healui.ai</a>
+                    <a href="#">🏥 Find Nearby Clinic</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Healui.ai. All rights reserved. | Transforming physiotherapy care across India 🇮🇳</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 100);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.textContent = '☰';
+            });
+        });
+
+        // Add hover effect to CTAs
+        document.querySelectorAll('.cta-button, .secondary-button').forEach(button => {
+            button.addEventListener('mouseenter', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.5)';
+                ripple.style.width = ripple.style.height = '0px';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.width = ripple.style.height = '100px';
+                    ripple.style.opacity = '0';
+                    ripple.style.transition = 'all 0.5s ease-out';
+                }, 10);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Animate device icons
+        const deviceIcons = document.querySelectorAll('.device-icon');
+        setInterval(() => {
+            const randomIcon = deviceIcons[Math.floor(Math.random() * deviceIcons.length)];
+            randomIcon.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                randomIcon.style.transform = 'scale(1)';
+            }, 500);
+        }, 2000);
+    </script>
+</body>
+</html>
